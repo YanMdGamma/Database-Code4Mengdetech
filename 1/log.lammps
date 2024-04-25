@@ -1,0 +1,51 @@
+LAMMPS (23 Jun 2022 - Update 1)
+﻿units		metal
+WARNING: Detected non-ASCII characters in input. Will try to continue by replacing with ASCII equivalents where known. (../input.cpp:436)
+atom_style	atomic
+timestep    0.001   # 1 fs/MD step
+boundary	p p p
+processors * * *
+
+variable   rand1 equal random(1,1000000,748935)
+variable   rand2 equal round(v_rand1)
+
+variable   filename string 1695167821.86476
+
+# Read in self-made atomic data file
+read_data   ${filename}.dat # note that the longest axis is z-axis now for later convenience
+read_data   1695167821.86476.dat 
+Reading data file ...
+  orthogonal box = (0 0 0) to (48.428289 30.857209 29.396923)
+  4 by 4 by 3 MPI processor grid
+  reading atoms ...
+  3998 atoms
+  read_data CPU = 0.008 seconds
+
+mass 1 69.723  # Ga
+mass 2 15.9994  # O
+# mass 3 14.006 # N
+
+# set type 2 type/fraction 3 0.00521 2022
+
+pair_style	quip
+pair_coeff	* *  ../soapGAP_20220921/gap_GaO_20220921.xml "Potential xml_label=GAP_2022_9_22_480_23_27_2_249" 31 8
+
+# ######################### Potential: tagGAP_20220921_final ##########################
+# pair_style hybrid/overlay eam/fs tabgap
+# pair_coeff * * eam/fs ../tabGAP_20220921_final/Ga-O.eam.fs Ga O
+# pair_coeff * * tabgap ../tabGAP_20220921_final/Ga-O.tabgap Ga O no yes
+# #####################################################################################
+
+neighbor        2.0 bin
+neigh_modify    every 1 delay 0
+
+####### compute some useful parameters of the system ###################
+compute     ep all pe/atom
+compute     ek all ke/atom
+variable    ape equal pe/atoms
+variable    ake equal ke/atoms
+variable    avol equal vol/atoms
+
+############ First Step: Run NPT to thermalize the system  #########################
+log        log.${filename}_NPT
+log        log.1695167821.86476_NPT

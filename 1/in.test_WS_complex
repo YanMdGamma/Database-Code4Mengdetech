@@ -1,0 +1,58 @@
+﻿units		metal
+atom_style	atomic
+timestep    0.001   # 1 fs/MD step
+boundary	p p p
+processors * * *   
+
+variable   rand1 equal random(1,1000000,748935)
+variable   rand2 equal round(v_rand1)
+
+variable   filename string 1695167821.86476
+
+# Read in self-made atomic data file 
+read_data   ${filename}.dat # note that the longest axis is z-axis now for later convenience
+
+mass 1 69.723  # Ga
+mass 2 15.9994  # O
+# mass 3 14.006 # N
+
+# set type 2 type/fraction 3 0.00521 2022
+
+pair_style	quip
+pair_coeff	* *  ../soapGAP_20220921/gap_GaO_20220921.xml "Potential xml_label=GAP_2022_9_22_480_23_27_2_249" 31 8
+
+# ######################### Potential: tagGAP_20220921_final ##########################
+# pair_style hybrid/overlay eam/fs tabgap
+# pair_coeff * * eam/fs ../tabGAP_20220921_final/Ga-O.eam.fs Ga O
+# pair_coeff * * tabgap ../tabGAP_20220921_final/Ga-O.tabgap Ga O no yes
+# #####################################################################################
+
+neighbor        2.0 bin
+neigh_modify    every 1 delay 0
+
+####### compute some useful parameters of the system ###################
+compute     ep all pe/atom 
+compute     ek all ke/atom 
+variable    ape equal pe/atoms
+variable    ake equal ke/atoms
+variable    avol equal vol/atoms
+
+############ First Step: Run NPT to thermalize the system  #########################
+log        log.${filename}_NPT
+variable   out_step equal 1
+thermo      ${out_step} 
+
+thermo_style    custom step dt time temp press pxx lx pyy ly pzz lz v_avol v_ape v_ake fmax etotal
+thermo_modify   lost warn line one flush yes format 1 "ec %8lu" format float "%14.10g"
+dump        mydump all custom ${out_step} dump.${filename}_thermalization id type x y z c_ep c_ek fx fy fz
+
+min_modify dmax 0.1
+min_style cg
+minimize 0 1.0e-6 10000 100000
+
+undump mydump
+
+# ####################### End of the one laser pulse #################################
+
+
+
