@@ -68,7 +68,7 @@ The `if __name__ == "__main__":` is used for generate large test sets.
 
 ### Notice:
 
-`The raw data collection is stored in the data_base folder` xxx.txt can be changed to other basic structures.
+`The raw data collection is stored in the **data_base** folder` xxx.txt can be changed to other basic structures.
 
 ```python
 file_name = 'path/to/data_base/xxx.txt'
