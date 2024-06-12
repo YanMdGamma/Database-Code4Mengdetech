@@ -24,7 +24,7 @@ This algorithm contained the curves of database $\text V_{\text ia}^{\text Ga}$,
 
 The `if __name__ == "__main__":` is used for generate large test sets.
 
-1. Change the ==examples_num== to the number you need for the number of your tests.
+1. Change the `examples_num` to the number you need for the number of your tests.
 
    ```python
    examples_num = 'num' # the number you want
@@ -38,7 +38,7 @@ The `if __name__ == "__main__":` is used for generate large test sets.
 
    The original file contains an empty <u>***.txt***</u> file, followed by the path where the datas are created.
 
-3. Change ==mul_x==, ==mul_y==, ==mul_z== to the  magnification you need.
+3. Change `mul_x`, `mul_y`, `mul_z` to the  magnification you need.
 
    ```python
        mul_x = 'x_multiple' # x_direction 
@@ -48,7 +48,7 @@ The `if __name__ == "__main__":` is used for generate large test sets.
 
    
 
-4. Use ==r_a==, ==r_b==, ==r_c== ,==r_d==, ==r_e== to obtain the proportion of different defect types in the whole system, this proportion is calculated by the magnification of x, y and z in the three directions.
+4. Use `r_a`, `r_b`, `r_c` ,`r_d`, `r_e` to obtain the proportion of different defect types in the whole system, this proportion is calculated by the magnification of x, y and z in the three directions.
 
    ```python
        r_a = 'ratio_ia' # The proportion of the ia configuration in the magnification
@@ -68,7 +68,7 @@ The `if __name__ == "__main__":` is used for generate large test sets.
 
 ### Notice:
 
-==The raw data collection is stored in the <u>***data_base***</u> folder== xxx.txt can be changed to other basic structures.
+`The raw data collection is stored in the <u>***data_base***</u> folder` xxx.txt can be changed to other basic structures.
 
 ```python
 file_name = 'path/to/data_base/xxx.txt'
@@ -137,11 +137,11 @@ The main function is contained in folder <u>***“stable_temp”***</u>.
 
 7. Change file_name into  f‘path/to/stable_files’.
 
-8. ==file_name== contains all the stable_files’ name. Different test sets are separated by Spaces and stored as.txt documents.
+8. `file_name` contains all the stable_files’ name. Different test sets are separated by Spaces and stored as.txt documents.
 
    ![](https://s2.loli.net/2024/06/12/YWMUlswCbOoLk9u.png)
 
-9. ==address_all== contains all direction to all stable_files.
+9. `address_all` contains all direction to all stable_files.
 
 10. The average location of every atom is generated through all above  steps. The file is generated in a <u>***.xlsx***</u> file.
 
