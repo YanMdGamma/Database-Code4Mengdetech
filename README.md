@@ -115,7 +115,7 @@ The main function is contained in folder <u>***“Algorithm”***</u>
 
 The periodic boundary condition algorithm is used in the dynamic detection process of high temperature annealing to avoid the problem of atomic environment information contained in ARDF due to particles moving out of the lattice of the test system.
 
-## Then
+## After setting up the storage data path and introducing the corresponding function package, the test begins: 
 
 After importing all the functions you need, the `if __name__ == "__main__":` is set for running the test program. The <u>***output.txt***</u> file contains the information of test results, ID, positions of complex point defects in test system.
 
