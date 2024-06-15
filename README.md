@@ -66,13 +66,13 @@ The `if __name__ == "__main__":` is used for generate large test sets.
 
 6. Then the data files are generated from code.
 
-### Notice:
-
-`The raw data collection is stored in the **data_base** folder` xxx.txt can be changed to other basic structures.
-
-```python
-file_name = 'path/to/data_base/xxx.txt'
-```
+> [!NOTE]
+>
+> `The raw data collection is stored in the <u>***data_base***</u> folder` xxx.txt can be changed to other basic structures.
+>
+> ```python
+> file_name = 'path/to/data_base/xxx.txt'
+> ```
 
 ### Create a test file
 
@@ -114,6 +114,12 @@ According to the evaluation criteria of elbow chart we introduced the method in 
 The main function is contained in folder <u>***“Algorithm”***</u>
 
 The periodic boundary condition algorithm is used in the dynamic detection process of high temperature annealing to avoid the problem of atomic environment information contained in ARDF due to particles moving out of the lattice of the test system.
+
+## Then
+
+After importing all the functions you need, the `if __name__ == "__main__":` is set for running the test program. The <u>***output.txt***</u> file contains the information of test results, ID, positions of complex point defects in test system.
+
+We provided an example of both static and dynamic testing: <u>***statistic_example***</u>, <u>***anneal_example***</u>
 
 ## Data preprocessing
 
