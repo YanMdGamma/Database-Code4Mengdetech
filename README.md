@@ -153,7 +153,3 @@ The main function is contained in folder <u>***“stable_temp”***</u>.
 
     ![image-20240612151544600](https://s2.loli.net/2024/06/12/pPLYJXtiMwmcoTz.png)
 
-1. 明天要记得查一下，readme文件的说明情况，要尽可能地加上需要的内容.
-2. 要查阅一些有影响力的期刊，至少和PRB的水平差不多。APL之类的，最好影响力更高一些。
-3. 将代码的补充内容增加到文章的主体中，增加到了==补充材料==中。
-
