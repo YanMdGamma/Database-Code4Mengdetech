@@ -68,7 +68,7 @@ The `if __name__ == "__main__":` is used for generate large test sets.
 
 > [!NOTE]
 >
-> `The raw data collection is stored in the <u>***data_base***</u> folder` xxx.txt can be changed to other basic structures.
+> `The raw data collection is stored in the ***data_base*** folder` xxx.txt can be changed to other basic structures.
 >
 > ```python
 > file_name = 'path/to/data_base/xxx.txt'
@@ -105,21 +105,21 @@ The main two functions are contained in folder <u>***“Algorithm”***</u>
 1. “threshold_defects” function contains the procedure of K-MS Hierarchical clustering algorithm to select split vacancy defects in test set.
 2. “threshold_interstitials” function contains the procedure of K-MS Hierarchical clustering algorithm to select split interstitial defects in test set.
 
-#### Import ‘Elbow.py’ to utilize K-MS evaluations
-
-According to the evaluation criteria of elbow chart we introduced the method in “threshold_defects.py” and “threshold_interstitials.py”.
-
 ### Import periodic boundary condition algorithm “Periodic_boundary_condition.py”
 
 The main function is contained in folder <u>***“Algorithm”***</u>
 
 The periodic boundary condition algorithm is used in the dynamic detection process of high temperature annealing to avoid the problem of atomic environment information contained in ARDF due to particles moving out of the lattice of the test system.
 
-## After setting up the storage data path and introducing the corresponding function package, the test begins: 
+```python
+from Algorithm import threshold_defects, threshold_interstitials, Periodic_boundary_condition
+```
+
+## Then
 
 After importing all the functions you need, the `if __name__ == "__main__":` is set for running the test program. The <u>***output.txt***</u> file contains the information of test results, ID, positions of complex point defects in test system.
 
-We provided an example of both static and dynamic testing: <u>***statistic_example***</u>, <u>***anneal_example***</u>
+We provided an example of both static and dynamic testing: <u>***statistic_example***</u>, <u>***anneal_example***</u>.  A 20,000-atom system containing a preset 50 defect detection data results, <u>***20000_50defects_example***</u>, is provided as well.
 
 ## Data preprocessing
 
@@ -153,5 +153,7 @@ The main function is contained in folder <u>***“stable_temp”***</u>.
 
     ![image-20240612151544600](https://s2.loli.net/2024/06/12/pPLYJXtiMwmcoTz.png)
 
-
+1. 明天要记得查一下，readme文件的说明情况，要尽可能地加上需要的内容.
+2. 要查阅一些有影响力的期刊，至少和PRB的水平差不多。APL之类的，最好影响力更高一些。
+3. 将代码的补充内容增加到文章的主体中，增加到了==补充材料==中。
 
