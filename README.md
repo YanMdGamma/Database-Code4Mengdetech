@@ -20,7 +20,7 @@ This algorithm contained the curves of database $\text V_{\text ia}^{\text Ga}$,
 >
 > For the test procedure, the descriptors should be in the order: `atom_id`, `atom_type`, `X`, `Y`, `Z`, `Coordination`
 
-2、Run run_file.py directly. Write something like:
+2、Run [ run_file.py](Github_code/examples/Statistic_test4_4000_5_defects/run_file.py) directly. Write something like:
 
 ```python
 python3.11.0 run_file.py /path/to/input.xyz /path/to/output.xyz 
@@ -48,7 +48,7 @@ python3.11.0 run_file.py /path/to/input.xyz /path/to/output.xyz
 
 If you use this code to run a defects detection process, please cite:
 
-1. Yan M, Zhao J, Djurabekova F, et al. Generalized Algorithm for Recognition of Complex Point Defects in Large-Scale β-Ga2O3[J]. arXiv preprint arXiv:2401.15920, 2024.[ https://doi.org/10.48550/arXiv.2401.15920](https://doi.org/10.48550/arXiv.2401.15920)
+Yan M, Zhao J, Djurabekova F, et al. Generalized Algorithm for Recognition of Complex Point Defects in Large-Scale β-$\rm {Ga_2O_3} $[J]. arXiv preprint arXiv:2401.15920, 2024.[ https://doi.org/10.48550/arXiv.2401.15920](https://doi.org/10.48550/arXiv.2401.15920)
 
 ## Contributors
 
