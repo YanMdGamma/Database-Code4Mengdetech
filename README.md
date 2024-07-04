@@ -48,7 +48,7 @@ python3.11.0 run_file.py /path/to/input.xyz /path/to/output.xyz
 
 If you use this code to run a defects detection process, please cite:
 
-Yan M, Zhao J, Djurabekova F, et al. Generalized Algorithm for Recognition of Complex Point Defects in Large-Scale β-$\text Ga_2\text O_3$[J]. arXiv preprint arXiv:2401.15920, 2024.[ https://doi.org/10.48550/arXiv.2401.15920](https://doi.org/10.48550/arXiv.2401.15920)
+Yan M, Zhao J, Djurabekova F, et al. Generalized Algorithm for Recognition of Complex Point Defects in Large-Scale β-$Ga_2O_3$[J]. arXiv preprint arXiv:2401.15920, 2024.[ https://doi.org/10.48550/arXiv.2401.15920](https://doi.org/10.48550/arXiv.2401.15920)
 
 ## Contributors
 
