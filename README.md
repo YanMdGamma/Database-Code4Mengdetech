@@ -8,7 +8,7 @@ This project contain one main branch for our essay, Github_code. The Github_code
 
 ### ARDF algorithm
 
-This algorithm contained the curves of database $\text V_{\text ia}^{\text Ga}$, $\text V_{\text ib}^{\text Ga}$, $\text V_{\text ic}^{\text Ga}$, $\text Ga_{\text iad}$, $\text Ga_{\text iae}$, Ori data and some additional data. Meanwhile, the Algorithm package contained the contents of ***<u>PSO</u>*** algorithm for `amplification coefficient` $\alpha$ [details for PSO calculation](Github_code/PSO_4_amplification_coefficient), and the details of ***<u>K-MC  clustering</u>***. The output is saved in a .xyz file.
+This algorithm contained the curves of database $\text V_{\text ia}^{\text Ga}$, $\text V_{\text ib}^{\text Ga}$, $\text V_{\text ic}^{\text Ga}$, $\text Ga_{\text iad}$, $\text Ga_{\text iae}$, Ori data and some additional data. Meanwhile, the Algorithm package contained the contents of ***<u>PSO</u>*** algorithm for `amplification coefficient` $\alpha$ [(details for PSO calculation)](Github_code/PSO_4_amplification_coefficient), and the details of ***<u>K-MC  clustering</u>***. The output is saved in a .xyz file.
 
 ## How to:
 
