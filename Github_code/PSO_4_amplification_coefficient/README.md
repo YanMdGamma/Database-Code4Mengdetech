@@ -16,7 +16,7 @@ The standard ARDF data is calculated through interpolation. Stored as **ia.mat**
 
 ## output _amplification_coefficient.txt
 
-- Run the file PSO.py to obtain the amplification coefficient values.
+- Run the file [PSO.py](Github_code/PSO_4_amplification_coefficient/PSO.py) to obtain the amplification coefficient values.
 - The output of amplification coefficient for split vacancy and split interstitial is stored in `output _amplification_coefficient.txt` .
 
 
