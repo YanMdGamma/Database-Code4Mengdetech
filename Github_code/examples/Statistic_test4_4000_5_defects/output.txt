@@ -1,0 +1,116 @@
+input_data = 
+    Similarity    differ  id_ia  differ_max
+0    0.727546 -0.081136   41.0    0.727546
+ia_all_without_du =     Similarity    differ  id_ia  differ_max
+0    0.727546 -0.081136   41.0    0.727546
+deleted_rows =  Empty DataFrame
+Columns: [Similarity, differ, id_ia, differ_max]
+Index: []
+ia_all_without =  [[ 0.72754646]
+ [-0.08113623]
+ [41.        ]
+ [ 0.72754646]]
+deleted_rows_numpy =  []
+input_data = 
+    Similarity    differ  id_ib
+0    0.749207  0.008229  125.0
+ib_all_without_du =     Similarity    differ  id_ib
+0    0.749207  0.008229  125.0
+deleted_rows =  Empty DataFrame
+Columns: [Similarity, differ, id_ib]
+Index: []
+ib_all_without =  [[7.49206708e-01]
+ [8.22948461e-03]
+ [1.25000000e+02]]
+deleted_rows_numpy =  []
+input_data = 
+   Similarity        differ  id_ic
+0         1.0 -8.608424e-17  166.0
+ic_all_without_du =     Similarity        differ  id_ic
+0         1.0 -8.608424e-17  166.0
+deleted_rows =  Empty DataFrame
+Columns: [Similarity, differ, id_ic]
+Index: []
+ic_all_without =  [[ 1.00000000e+00]
+ [-8.60842373e-17]
+ [ 1.66000000e+02]]
+deleted_rows_numpy =  []
+The ID of ia is:  [41.0] 
+The ID of ib is:  [125.0] 
+The ID of ic is:  [166.0]
+input_data = 
+   Similarity        differ  id_id
+0    1.000000 -4.288544e-18  304.0
+1    0.872339 -1.058704e-03  310.0
+2    0.373968  1.430280e-02  358.0
+id_all_without_du =     Similarity        differ  id_id
+0    1.000000 -4.288544e-18  304.0
+1    0.872339 -1.058704e-03  310.0
+2    0.373968  1.430280e-02  358.0
+deleted_rows =  Empty DataFrame
+Columns: [Similarity, differ, id_id]
+Index: []
+id_all =  [[ 1.00000000e+00  8.72338844e-01  3.73968106e-01]
+ [-4.28854443e-18 -1.05870361e-03  1.43027965e-02]]
+id_min =  [[ 0.37396811]
+ [-0.0010587 ]]
+id_max =  [[1.       ]
+ [0.0143028]]
+C_d =  [[ 3.73968106e-01  1.43027965e-02  2.00000000e+00]
+ [ 9.36169422e-01 -5.29351806e-04  1.00000000e+00]]
+---------------------------------------------
+C_d[-1, -1] =  1.0
+---------------------------------------------
+ide configuration Atomic ids of all id types-------------------------------------------
+d_all_cate =  [1.         0.87233884]
+-----------------------------------------------
+-----------------------------------------
+id last recognition threshold [304.0, 310.0]
+All the contents of the id configuration-----------------------------------------------
+input_data = 
+   Similarity    differ  id_ie
+0    4.468274 -0.173973  314.0
+1    7.347924 -0.020156  347.0
+2    8.358956  0.013228  349.0
+3    4.600118 -0.510989  337.0
+ie_all_without_du =     Similarity    differ  id_ie
+0    4.468274 -0.173973  314.0
+1    7.347924 -0.020156  347.0
+2    8.358956  0.013228  349.0
+3    4.600118 -0.510989  337.0
+deleted_rows =  Empty DataFrame
+Columns: [Similarity, differ, id_ie]
+Index: []
+ie_all_without =  [[ 4.46827404e+00  7.34792427e+00  8.35895607e+00  4.60011822e+00]
+ [-1.73972802e-01 -2.01563426e-02  1.32283898e-02 -5.10989077e-01]
+ [ 3.14000000e+02  3.47000000e+02  3.49000000e+02  3.37000000e+02]]
+deleted_rows_numpy =  []
+ie_all =  [[ 4.46827404  7.34792427  8.35895607  4.60011822]
+ [-0.1739728  -0.02015634  0.01322839 -0.51098908]]
+ie_min =  [[ 4.46827404]
+ [-0.51098908]]
+ie_max =  [[8.35895607]
+ [0.01322839]]
+C_e =  [[ 4.53419613e+00 -3.42480940e-01  2.00000000e+00]
+ [ 7.85344017e+00 -3.46397639e-03  1.00000000e+00]]
+---------------------------------------------
+---------------------------------------------
+ide configuration Atomic ids of all ie types--------------------------------------
+-----------------------------------------------
+-----------------------------------------
+ie last recognition threshold:  [347.0, 349.0]
+All the contents of the ie configuration-----------------------------------------------
+The ID of ia is:  [41.0] 
+The ID of ib is:  [125.0] 
+The ID of ic is:  [166.0]
+The positions of ia is:  [[39.7129  13.9256   8.95077]] 
+The positions of ib is:  [[42.3795 20.0472 10.276 ]] 
+The positions of ic is:  [[36.3226 12.3432 20.5805]]
+
+The ID of id is:  [304.0, 310.0] 
+The ID of ie is:  [347.0, 349.0] 
+The ID of ide is [314. 337. 358.]
+The positions of id is:  [[19.4203   9.25563 15.5261 ]
+ [21.025    9.25587 13.1516 ]] 
+The positions of ie is:  [[33.0628 23.1469 14.771 ]
+ [30.4391 23.1424 15.5462]]

@@ -1,0 +1,5 @@
+amplification_coefficient for split vacancy(a,b&c): 
+ [15.94272376]
+
+amplification_coefficient for split interstitial(d&e): 
+ [13.82293905]
