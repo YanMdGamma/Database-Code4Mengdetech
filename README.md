@@ -1,4 +1,4 @@
-# ARDF_PSO&K-Means for defects detection in $\beta$-Ga2O3
+![image](https://github.com/YanMdGamma/Database-Code4PRB/assets/114713847/4a2e4825-1402-4395-a913-08b386a487a3)# ARDF_PSO&K-Means for defects detection in $\beta$-Ga2O3
 
 ## Description
 
@@ -52,4 +52,6 @@ Yan M, Zhao J, Djurabekova F, et al. Generalized Algorithm for Recognition of Co
 
 ## Contributors
 
+- Mengzhi Yan (main)
+- (main)
 - Mengzhi Yan (main)
