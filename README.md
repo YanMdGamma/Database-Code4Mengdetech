@@ -23,10 +23,10 @@ This algorithm contained the curves of database $\text V_{\text ia}^{\text Ga}$,
 2、Run [ run_file.py](Github_code/examples/Statistic_test4_4000_5_defects/run_file.py) directly. Write something like:
 
 ```python
-python3.11.0 run_file.py /path/to/input.xyz /path/to/output.xyz 
+python3.11.0 run_file.py ./input.xyz ./output.xyz 
 ```
 
-- `/path/to/input.xyz` should be changed to the test file directory, while `/path/to/output.xyz` refers to the output result directory.
+- `./input.xyz` should be changed to the test file directory, while `./output.xyz` refers to the output result directory.
 
 - Amplification coefficient for split vacancy defects ($\text V_{\text ia}^{\text Ga}$, $\text V_{\text ib}^{\text Ga}$, $\text V_{\text ic}^{\text Ga}$) and split interstitial defects ( $\text Ga_{\text iad}$, $\text Ga_{\text iae}$) could be modified through:
 
@@ -48,10 +48,11 @@ python3.11.0 run_file.py /path/to/input.xyz /path/to/output.xyz
 
 If you use this code to run a defects detection process, please cite:
 
-Yan M, Zhao J, Djurabekova F, et al. Generalized Algorithm for Recognition of Complex Point Defects in Large-Scale β-$Ga_2O_3$[J]. arXiv preprint arXiv:2401.15920, 2024.[ https://doi.org/10.48550/arXiv.2401.15920](https://doi.org/10.48550/arXiv.2401.15920)
+Yan M, Zhao J, Djurabekova F, et al. Generalized Algorithm for Recognition of Complex Point Defects in Large-Scale β-Ga2O3[J]. arXiv preprint arXiv:2401.15920, 2024.[ https://doi.org/10.48550/arXiv.2401.15920](https://doi.org/10.48550/arXiv.2401.15920)
 
 ## Contributors
 
 - Mengzhi Yan (main)
-- (main)
-- Mengzhi Yan (main)
+- Junlei Zhao
+- Zongwei Xu
+- Jesper Byggmästar
