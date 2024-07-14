@@ -22,7 +22,7 @@ This algorithm contained the curves of database $\text V_{\text ia}^{\text Ga}$,
 
 
 
-2、Run [ Mengdetech.py](Github_code/examples/Statistic_test4_4000_5_defects/run_file.py) directly. Write something like:
+2、Run [ Mengdetech.py](Github_code/examples/Statistic_test4_4000_5_defects/Mengdetech.py) directly. Write something like:
 
 ```python
 python Mengdetech.py ./input.xyz ./output.xyz 
