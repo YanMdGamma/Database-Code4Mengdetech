@@ -30,7 +30,7 @@ python Mengdetech.py ./input.xyz ./output.xyz
 
 <details>
     <summary>Tips for running (click here!)</summary>
-    	Users need to install the `numpy`, pandas, math, matplotlib, scipy, sklearn packages in native python environment to run the program properly.
+    	Users need to install the `numpy`, `pandas`, `math`, `matplotlib`, `scipy`, `sklearn` packages in native python environment to run the program properly.
 </details>
 
 - `./input.xyz` should be changed to the test file directory, while `./output.xyz` refers to the output result directory.
