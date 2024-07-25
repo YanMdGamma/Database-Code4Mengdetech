@@ -33,6 +33,7 @@ python Mengdetech.py ./input.xyz ./output.xyz
     	Users need to install the `numpy`, `pandas`, `math`, `matplotlib`, `scipy`, `sklearn` packages in native python environment to run the program properly.
 </details>
 
+
 - `./input.xyz` should be changed to the test file directory, while `./output.xyz` refers to the output result directory.
 
 - Amplification coefficient for split vacancy defects ($\text V_{\text ia}^{\text Ga}$, $\text V_{\text ib}^{\text Ga}$, $\text V_{\text ic}^{\text Ga}$) and split interstitial defects ( $\text Ga_{\text iad}$, $\text Ga_{\text iae}$) could be modified through:
@@ -50,6 +51,14 @@ python Mengdetech.py ./input.xyz ./output.xyz
   ```
 
   `--atom_type 'num'` stands for the atom type you need to change for your tests.
+
+> [!IMPORTANT]
+>
+> #### Run Cython to activate ‘my_module’
+>
+> ```python
+> python setup.py build_ext --inplace
+> ```
 
 ## References
 
