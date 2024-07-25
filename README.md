@@ -54,7 +54,7 @@ python Mengdetech.py ./input.xyz ./output.xyz
 
 > [!IMPORTANT]
 >
-> #### Run Cython to activate ‘my_module’
+> #### Run `Cython` to activate ‘my_module’
 >
 > ```python
 > python setup.py build_ext --inplace
