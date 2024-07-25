@@ -6,38 +6,37 @@ import pandas as pd
 import scipy.io as sio
 import math
 
-# 肘部图的绘制和选择
 def elbow(inputArg1):
-    # 设置聚类数量的范围
+    #
     inputArg1 = inputArg1.T
     print(inputArg1.shape)
     input_data = pd.DataFrame(inputArg1)
-    inputArg1 = input_data.drop_duplicates()  # 对原始数据中的重复数据进行清洗
+    inputArg1 = input_data.drop_duplicates()  #
     k_values = np.arange(1, inputArg1.shape[0] + 1)
     print(k_values)
-    # 初始化聚类误差存储向量
+    # 
     errors = np.zeros(len(k_values))
     print(errors)
 
-    # 计算每个聚类数量下的聚类误差
+    # 
     # warnings.filterwarnings("ignore", category= ConvergenceWarning)
     for i, k in enumerate(k_values):
         kmeans = KMeans(n_clusters=k)
         kmeans.fit(inputArg1)
         errors[i] = np.sum(np.min(kmeans.transform(inputArg1), axis=1))
 
-    # 绘制肘部图
+    # 
     plt.figure()
-    # plt.rcParams['font.family'] = 'SimHei'  # 使用微软雅黑字体，可以根据需要更改
+    # plt.rcParams['font.family'] = 'SimHei'  # 
     mpl.rcParams["font.sans-serif"] = ["SimHei"]
-    # 设置正常显示符号
+
     mpl.rcParams["axes.unicode_minus"] = False
     plt.plot(k_values, errors, 'o-')
     plt.title('Elbow Method')
     plt.xlabel('Cluster number')
     plt.ylabel('error')
 
-    # 寻找肘部位置
+
     diff_errors = np.diff(errors)
     elbowIndex = np.where(np.abs(diff_errors) <= np.abs(np.mean(diff_errors)))[0][0]
     plt.plot(k_values[elbowIndex], errors[elbowIndex], 'ro', markersize=10, linewidth=2)
@@ -54,7 +53,7 @@ def threshold_interstitials(test_1_use, file):
     ide_d_final = []
     ied_e_final = []
     for i in range(test_1_use.shape[0]):
-        if (int(test_1_use[i, 5]) == 1 or int(test_1_use[i, 5]) == 2) and test_1_use[i, 7] == 4:  # 增加了配位数的判断
+        if (int(test_1_use[i, 5]) == 1 or int(test_1_use[i, 5]) == 2) and test_1_use[i, 7] == 4: 
             id_all.append(test_1_use[i, 6])
             id_pre.append(test_1_use[i, 8]/10)
             id_all_id.append(test_1_use[i, 0])
@@ -67,11 +66,11 @@ def threshold_interstitials(test_1_use, file):
                'id_id': id_all_id
     }
 
-    input_data = pd.DataFrame(data_id)  # 对重复数据进行的操作
+    input_data = pd.DataFrame(data_id) 
     print('input_data = ', file=file)
     print(input_data, file=file)
-    deleted_rows = input_data[input_data.duplicated(subset=['Similarity', 'differ'], keep='first')]  # 得到重复数据的行
-    id_all_without_du = input_data.drop_duplicates(subset=['Similarity', 'differ'], keep='first')  #  得到删除重复数据的内容
+    deleted_rows = input_data[input_data.duplicated(subset=['Similarity', 'differ'], keep='first')] 
+    id_all_without_du = input_data.drop_duplicates(subset=['Similarity', 'differ'], keep='first') 
     print('id_all_without_du = ', id_all_without_du, file=file)
     print('deleted_rows = ', deleted_rows, file=file)
 
@@ -91,7 +90,7 @@ def threshold_interstitials(test_1_use, file):
     elif id_all.shape[0] == 1:
         d_infimum_all = id_all_id
     elif id_all.shape[0] == 2 and np.max(id_all) > 0.5 and np.min(id_all) < np.max(
-            id_all) * 0.8:  # 如果最小值比最大值的0.5还小就认为不是所需要的构型
+            id_all) * 0.8: 
         id_pre = id_all_without[1, :]
         id_all_id = id_all_without[2, :]
 
@@ -129,7 +128,6 @@ def threshold_interstitials(test_1_use, file):
         print('id_min = ', id_min, file=file)
         print('id_max = ', id_max, file=file)
 
-        # 判断是否既有大于零的数也有小于零的数
         contains_positive = np.any(id_all[1, :] > 0)
         contains_negative = np.any(id_all[1, :] < 0)
 
@@ -147,14 +145,14 @@ def threshold_interstitials(test_1_use, file):
             kmeans = KMeans(n_clusters=elbowIndex_id)
             #     print(ia_all)
             id_all = id_all.T
-            idx_id = kmeans.fit_predict(id_all) + 1 # ia_all 23.9.2 这个组别自己定义会从0组开始
+            idx_id = kmeans.fit_predict(id_all) + 1 
             #
             id_all = np.column_stack((id_all, idx_id))
             # #
             C_d = kmeans.cluster_centers_
             C_d = np.column_stack((C_d, np.arange(1, C_d.shape[0] + 1)))
             C_d = C_d[C_d[:, 0].argsort()]
-            print('C_d = ', C_d, file=file)  # 这个最后一类好像就行
+            print('C_d = ', C_d, file=file) 
             print('---------------------------------------------', file=file)
 
             print('C_d[-1, -1] = ', C_d[-1, -1], file=file)
@@ -162,9 +160,8 @@ def threshold_interstitials(test_1_use, file):
             if C_d[-1, 0] <= 0.5:
                 d_all_cate = []
             else:
-                d_all_cate = id_all[id_all[:, -1] == C_d[-1, -1], 0]  # 最后一行的类别
+                d_all_cate = id_all[id_all[:, -1] == C_d[-1, -1], 0] 
 
-            # 留一个类别用来存储复合缺陷构型
             ide = []
             for i in range(C_d.shape[0] - 1):
                 if (C_d[C_d.shape[0] - i - 2, 0] > 0.7 * C_d[-1, 0] and C_d[C_d.shape[0] - i - 2, 0] >= 0.5) or math.ceil(C_d[C_d.shape[0] - i - 2, 0] * 10) >= 6:
@@ -195,7 +192,6 @@ def threshold_interstitials(test_1_use, file):
                         if deleted_rows[0, i] in d_all_cate:
                             id_d_final.append(deleted_rows[2, i])
 
-            #   这个语句用来判断是否为复合构型的id结构原子
             ide_d_final = []
             if  np.array(ide).shape == 0:
                 ide_d_final = []
@@ -204,17 +200,15 @@ def threshold_interstitials(test_1_use, file):
                     c_d += 1
                     if i in id_final[0, :]:
                         index_d = id_final1.index(i)
-                        # 再叠加一层判断，如果其中的相似度要小于0.5就放到复合构型中
                         ide_d_final.append(id_final[2, index_d])
 
                 if deleted_rows.shape[1] != 0:
                     for i in range(deleted_rows.shape[1]):
                         if deleted_rows[0, i] in d_all_cate:
                             ide_d_final.append(deleted_rows[2, i])
-                # 将上面相似度较小于0.5的内容视为复合构型
                 for i in d_all_cate:
                     if i < 0.5:
-                        print("i的值为：", i)
+                        print("value of i is：", i)
                         c_d += 1
                         if i in id_final[0, :]:
                             index_d = id_final1.index(i)
@@ -228,7 +222,7 @@ def threshold_interstitials(test_1_use, file):
             print('-----------------------------------------------', file=file)
             # print('np.min(a_all_cate)', np.min(a_all_cate))
             print('-----------------------------------------', file=file)
-            d_infimum_all = id_d_final  # 根据识别阈值来进行判断
+            d_infimum_all = id_d_final  
             print('id last recognition threshold', d_infimum_all, file=file)
             print('All the contents of the id configuration-----------------------------------------------', file=file)
         else:
@@ -242,7 +236,7 @@ def threshold_interstitials(test_1_use, file):
     count_ie = 0
 
     for i in range(test_1_use.shape[0]):
-        if (int(test_1_use[i, 5]) == 3 or int(test_1_use[i, 5]) == 4) and test_1_use[i, 7] == 4:  # 增加了配位数的判断
+        if (int(test_1_use[i, 5]) == 3 or int(test_1_use[i, 5]) == 4) and test_1_use[i, 7] == 4:
             ie_all.append(test_1_use[i, 6] * 10)
             ie_pre.append(test_1_use[i, 8])
             ie_all_id.append(test_1_use[i, 0])
@@ -255,11 +249,11 @@ def threshold_interstitials(test_1_use, file):
                'id_ie': ie_all_id
     }
 
-    input_data = pd.DataFrame(data_ie)  # 对重复数据进行的操作
+    input_data = pd.DataFrame(data_ie)  
     print('input_data = ', file=file)
     print(input_data, file=file)
-    deleted_rows = input_data[input_data.duplicated(subset=['Similarity', 'differ'], keep='first')]  # 得到重复数据的行
-    ie_all_without_du = input_data.drop_duplicates(subset=['Similarity', 'differ'], keep='first')  #  得到删除重复数据的内容
+    deleted_rows = input_data[input_data.duplicated(subset=['Similarity', 'differ'], keep='first')] 
+    ie_all_without_du = input_data.drop_duplicates(subset=['Similarity', 'differ'], keep='first') 
     print('ie_all_without_du = ', ie_all_without_du, file=file)
     print('deleted_rows = ', deleted_rows, file=file)
 
@@ -278,7 +272,7 @@ def threshold_interstitials(test_1_use, file):
         e_infimum_all = []
     elif ie_all.shape[0] == 1:
         e_infimum_all = ie_all_id
-    elif ie_all.shape[0] == 2 and np.max(ie_all) > 2 and np.min(ie_all) < np.max(ie_all)*0.8: #  如果最小值比最大值的0.5还小就认为不是所需要的构型
+    elif ie_all.shape[0] == 2 and np.max(ie_all) > 2 and np.min(ie_all) < np.max(ie_all)*0.8: 
         ie_pre = ie_all_without[1, :]
         ie_all_id = ie_all_without[2, :]
 
@@ -315,7 +309,6 @@ def threshold_interstitials(test_1_use, file):
         print('ie_min = ', ie_min, file=file)
         print('ie_max = ', ie_max, file=file)
 
-        # 判断是否既有大于零的数也有小于零的数
         contains_positive = np.any(ie_all[1, :] > 0)
         contains_negative = np.any(ie_all[1, :] < 0)
 
@@ -333,14 +326,14 @@ def threshold_interstitials(test_1_use, file):
             kmeans = KMeans(n_clusters=elbowIndex_ie)
             #     print(ia_all)
             ie_all = ie_all.T
-            idx_ie = kmeans.fit_predict(ie_all) + 1  # ia_all 23.9.2 这个组别自己定义会从0组开始
+            idx_ie = kmeans.fit_predict(ie_all) + 1 
             #
             ie_all = np.column_stack((ie_all, idx_ie))
             # #
             C_e = kmeans.cluster_centers_
             C_e = np.column_stack((C_e, np.arange(1, C_e.shape[0] + 1)))
             C_e = C_e[C_e[:, 0].argsort()]
-            print('C_e = ', C_e, file=file)  # 这个最后一类好像就行
+            print('C_e = ', C_e, file=file)
             print('---------------------------------------------', file=file)
 
             print('C_e[-1, 1] = ', C_e[0, -1])
@@ -348,8 +341,8 @@ def threshold_interstitials(test_1_use, file):
             e_all_cate = []
             ied = []
             for i in range(C_e.shape[0]):
-                if C_e[i, 0] > 5: # 这个是将相似度大于5的全部包含进去了
-                    e_all_cate = np.concatenate((e_all_cate, ie_all[ie_all[:, -1] == C_e[i, -1], 0]))   # 最后一行的类别
+                if C_e[i, 0] > 5:
+                    e_all_cate = np.concatenate((e_all_cate, ie_all[ie_all[:, -1] == C_e[i, -1], 0])) 
                 elif C_e[i, 0] <= 5 and C_e[i, 0] >= 1:
                     ied = np.concatenate((e_all_cate, ie_all[ie_all[:, -1] == C_e[i, -1], 0]))
 
@@ -371,7 +364,6 @@ def threshold_interstitials(test_1_use, file):
                     if deleted_rows[0, i] in e_all_cate:
                         id_e_final.append(deleted_rows[2, i])
 
-#           同理这个地方放置相应的ide中ie构型的id值大小
             for i in ied:
                 c_e += 1
                 if i in ie_final[0, :]:
@@ -390,7 +382,7 @@ def threshold_interstitials(test_1_use, file):
             print('-----------------------------------------------', file=file)
             # print('np.min(a_all_cate)', np.min(a_all_cate))
             print('-----------------------------------------', file=file)
-            e_infimum_all = id_e_final  # 根据识别阈值来进行判断
+            e_infimum_all = id_e_final
             print('ie last recognition threshold: ', e_infimum_all, file=file)
             print('All the contents of the ie configuration-----------------------------------------------', file=file)
             # e_infimum_all = ie_all_id
