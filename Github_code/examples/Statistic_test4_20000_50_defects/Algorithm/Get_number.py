@@ -5,7 +5,6 @@ import time
 import shutil
 
 
-# 这个函数用来返回dat文件中第一个要更改的 80 atoms 数据，中的数字大小
 def get_number_from_line(file_path, lin_num, number_po):
     try:
         with open(file_path, 'r') as file:
@@ -14,20 +13,17 @@ def get_number_from_line(file_path, lin_num, number_po):
                 second_line = lines[lin_num]
                 numbers_int = []
                 numbers_float = []
-                # 将不同的数据类型存储到不同的数组中
                 for num in second_line.split(' '):
                     if num.isdigit():
                         numbers_int.append(int(num))
-                        # print(numbers_int) # 用来是否运行正常
                     else:
                         try:
                             float(num)
                             numbers_float.append(float(num))
-                            # print(numbers_float) # 用来看是否运行正常
                         except ValueError:
                             continue
-                # 返回我需要的内容，即盒子的长宽高
-                if len(numbers_int) > 0 and len(numbers_float) == 0:  # python 中表示并且关系用and *& 不好用*
+
+                if len(numbers_int) > 0 and len(numbers_float) == 0:  
                     print(numbers_int)
                     return numbers_int[number_po]
                 elif len(numbers_float) > 0 and len(numbers_int) == 0:
@@ -38,8 +34,8 @@ def get_number_from_line(file_path, lin_num, number_po):
                     print(int_float)
                     return int_float[number_po]
                 else:
-                    return print("不存在整型与浮点型数据。")
+                    return print("No more float and int value!")
     except IOError:
-        print("无法打开文件或读取数据出错。")
+        print("Cannot open the file!!")
     return None
 
