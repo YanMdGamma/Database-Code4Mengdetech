@@ -6,38 +6,38 @@ import matplotlib.pylab as mpl
 import pandas as pd
 import scipy.io as sio
 
-# 肘部图的绘制和选择
+# 
 def elbow(inputArg1):
-    # 设置聚类数量的范围
+    # 
     inputArg1 = inputArg1.T
     print(inputArg1.shape)
     input_data = pd.DataFrame(inputArg1)
-    inputArg1 = input_data.drop_duplicates()  # 对原始数据中的重复数据进行清洗
+    inputArg1 = input_data.drop_duplicates()  # 
     k_values = np.arange(1, inputArg1.shape[0] + 1)
     print(k_values)
-    # 初始化聚类误差存储向量
+    # 
     errors = np.zeros(len(k_values))
     print(errors)
 
-    # 计算每个聚类数量下的聚类误差
+    # 
     # warnings.filterwarnings("ignore", category= ConvergenceWarning)
     for i, k in enumerate(k_values):
         kmeans = KMeans(n_clusters=k)
         kmeans.fit(inputArg1)
         errors[i] = np.sum(np.min(kmeans.transform(inputArg1), axis=1))
 
-    # 绘制肘部图
+    # 
     plt.figure()
     # plt.rcParams['font.family'] = 'SimHei'
     mpl.rcParams["font.sans-serif"] = ["SimHei"]
-    # 设置正常显示符号
+    # 
     mpl.rcParams["axes.unicode_minus"] = False
     plt.plot(k_values, errors, 'o-')
     plt.title('Elbow Method')
     plt.xlabel('Cluster number')
     plt.ylabel('error')
 
-    # 寻找肘部位置
+    # 
     diff_errors = np.diff(errors)
     elbowIndex = -1  # Default value
     if diff_errors.size > 0:
@@ -51,12 +51,12 @@ def threshold_point_defects(test_1_use):
     ia_all = []
     ia_pre = []
     ia_all_id = []
-    ia_all_differ = [] # 在静态的实验里面没有引入这个变量
+    ia_all_differ = [] # 
     count_ia = 0
 
     for i in range(test_1_use.shape[0]):
         col_judge = test_1_use.shape[1]
-        if int(test_1_use[i, 5]) == 1 and test_1_use[i, 6] > 0.5 and int(test_1_use[i, 7]) == 4 and test_1_use[i, 9] == 0:  # 增加了配位数的判断
+        if int(test_1_use[i, 5]) == 1 and test_1_use[i, 6] > 0.5 and int(test_1_use[i, 7]) == 4 and test_1_use[i, 9] == 0:  # 
             ia_all.append(test_1_use[i, 6])
             ia_pre.append(test_1_use[i, 8])
             ia_all_id.append(test_1_use[i, 0])
@@ -74,11 +74,11 @@ def threshold_point_defects(test_1_use):
                'differ_max': ia_all_differ
     }
 
-    input_data = pd.DataFrame(data_ia)  # 对重复数据进行的操作
+    input_data = pd.DataFrame(data_ia)  # 
     print('input_data = ')
     print(input_data)
-    deleted_rows = input_data[input_data.duplicated(subset=['Similarity', 'differ'], keep='first')]  # 得到重复数据的行
-    ia_all_without_du = input_data.drop_duplicates(subset=['Similarity', 'differ'], keep='first')  #  得到删除重复数据的内容
+    deleted_rows = input_data[input_data.duplicated(subset=['Similarity', 'differ'], keep='first')]  # 
+    ia_all_without_du = input_data.drop_duplicates(subset=['Similarity', 'differ'], keep='first')  #  
     print('ia_all_without_du = ', ia_all_without_du)
     print('deleted_rows = ', deleted_rows)
 
@@ -119,9 +119,8 @@ def threshold_point_defects(test_1_use):
         ia_pre = ia_all_without[1, :]
         ia_all_id = ia_all_without[2, :]
         ia_all_differ = ia_all_without[3, :]
-        # 这个differ后面动态测试的时候有用
-        # 24.1.4 求解均值
-        # 这个differ后面动态测试的时候有用
+        # 
+        # 
         ia_all = np.vstack((ia_all, ia_pre, ia_all_differ))
         ia_final = np.vstack((ia_all, ia_all_id))
         print('ia_all = ', ia_all)
@@ -139,7 +138,7 @@ def threshold_point_defects(test_1_use):
         print('ia_min = ', ia_min)
         print('ia_max = ', ia_max)
 
-        # 判断是否既有大于零的数也有小于零的数
+        # 
         contains_positive = np.any(ia_all[1, :] > 0)
         contains_negative = np.any(ia_all[1, :] < 0)
 
@@ -154,13 +153,13 @@ def threshold_point_defects(test_1_use):
 
             # elbowIndex_ia = 8
             print("elbowIndex_ia", elbowIndex_ia)
-            if elbowIndex_ia == 0: # 仅仅识别出一个ia构型
+            if elbowIndex_ia == 0: # 
                 elbowIndex_ia = 1
             #
             kmeans = KMeans(n_clusters=elbowIndex_ia)
             #     print(ia_all)
             ia_all = ia_all.T
-            idx_ia = kmeans.fit_predict(ia_all) + 1  # ia_all 23.9.2 这个组别自己定义会从0组开始
+            idx_ia = kmeans.fit_predict(ia_all) + 1  # ia_all 23.9.2 
             #
             ia_all = np.column_stack((ia_all, idx_ia))
             # #
@@ -169,7 +168,6 @@ def threshold_point_defects(test_1_use):
             C_a = C_a[C_a[:, 0].argsort()]
             print("C_a", C_a)
             count = 0
-            # # 如果最值之间的平均值要大于0.45，那么便舍去该组，更新C_a
             # for i in range(C_a.shape[0]):
             #     print(C_a.shape[1])
             #     if C_a.shape[1] > 2:
@@ -181,19 +179,19 @@ def threshold_point_defects(test_1_use):
             a_all_cate = []
             a_all_cate = np.concatenate((a_all_cate, ia_all[ia_all[:, -1] == C_a[-1, -1], 0]))
 
-            # 将对应的differ平均值进行计算
+            # 
             print('24.1.5: a_all_cate:', a_all_cate)
 
             for i in range(C_a.shape[0] - 1):
                 if C_a[C_a.shape[0] - i - 2, 0] > 0.91 * C_a[-1, 0]:
                     a_all_cate = np.concatenate((a_all_cate, ia_all[ia_all[:, -1] == C_a[C_a.shape[0] - i - 2, -1], 0]))
 
-            print('C_a = ', C_a)  # 这个最后一类好像就行
+            print('C_a = ', C_a)  # 
             print('---------------------------------------------')
 
             print('C_a[-1, 1] = ', C_a[0, -1])
             print('---------------------------------------------')
-              # 最后一行的类别
+              # 
 
             id_a_final = []
             c_a = 0
@@ -208,7 +206,7 @@ def threshold_point_defects(test_1_use):
                     id_a_final.append(ia_final[3, index_a])
                     print('24.1.5:id_a_final:', ia_final[3, index_a])
 
-            # 判断是否会在重复值当中存在和a_all_cate相同的内容
+            # 
             if deleted_rows.shape[1] != 0:
                 for i in range(deleted_rows.shape[1]):
                     if deleted_rows[0, i] in a_all_cate:
@@ -220,7 +218,7 @@ def threshold_point_defects(test_1_use):
             print('-----------------------------------------------')
             # print('np.min(a_all_cate)', np.min(a_all_cate))
             print('-----------------------------------------')
-            a_infimum_all = id_a_final  # 根据识别阈值来进行判断
+            a_infimum_all = id_a_final  # 
             print('ia last recognition threshold: ', a_infimum_all)
             print('All the contents of the ia configuration-----------------------------------------------')
         else:
@@ -233,7 +231,7 @@ def threshold_point_defects(test_1_use):
     count_ib = 0
 
     for i in range(test_1_use.shape[0]):
-        if int(test_1_use[i, 5]) == 2 and int(test_1_use[i, 7]) == 6 and test_1_use[i, 9] == 0:  # 增加了配位数的判断
+        if int(test_1_use[i, 5]) == 2 and int(test_1_use[i, 7]) == 6 and test_1_use[i, 9] == 0:  # 
             ib_all.append(test_1_use[i, 6])
             ib_pre.append(test_1_use[i, 8])
             ib_all_id.append(test_1_use[i, 0])
@@ -246,11 +244,11 @@ def threshold_point_defects(test_1_use):
                'id_ic': ib_all_id
     }
 
-    input_data = pd.DataFrame(data_ib)  # 对重复数据进行的操作
+    input_data = pd.DataFrame(data_ib)  # 
     print('input_data = ')
     print(input_data)
-    deleted_rows = input_data[input_data.duplicated(subset=['Similarity', 'differ'], keep='first')]  # 得到重复数据的行
-    ib_all_without_du = input_data.drop_duplicates(subset=['Similarity', 'differ'], keep='first')  #  得到删除重复数据的内容
+    deleted_rows = input_data[input_data.duplicated(subset=['Similarity', 'differ'], keep='first')]  # 
+    ib_all_without_du = input_data.drop_duplicates(subset=['Similarity', 'differ'], keep='first')  #  
     print('ib_all_without_du = ', ib_all_without_du)
     print('deleted_rows = ', deleted_rows)
 
@@ -263,7 +261,6 @@ def threshold_point_defects(test_1_use):
 
     ib_all = ib_all_without[0, :]
 
-    # 还要增加的内容是，对于识别结果仅有两个粒子的情况，要去除识别效果差的，两个粒子的情况无法采用聚类区分，会有很大误差
     if ib_all.shape[0] == 0:
         b_infimum_all = []
         # print(ib_all.shape[0])
@@ -271,7 +268,7 @@ def threshold_point_defects(test_1_use):
         b_infimum_all = []
     elif ib_all.shape[0] == 1:
         b_infimum_all = ib_all_id
-    elif ib_all.shape[0] == 2 and np.max(ib_all) > 0.5 and np.min(ib_all) < np.max(ib_all)*0.8: #  如果最小值比最大值的0.5还小就认为不是所需要的构型
+    elif ib_all.shape[0] == 2 and np.max(ib_all) > 0.5 and np.min(ib_all) < np.max(ib_all)*0.8: #  
         ib_pre = ib_all_without[1, :]
         ib_all_id = ib_all_without[2, :]
 
@@ -288,7 +285,7 @@ def threshold_point_defects(test_1_use):
                 if deleted_rows[0, i] == np.max(ib_all):
                     b_infimum_all.append(deleted_rows[2, i])
     else:
-        #  如果存在相同的内容就需要将后面的值先进行存储
+        #  
         ib_pre = ib_all_without[1, :]
         ib_all_id = ib_all_without[2, :]
 
@@ -308,7 +305,7 @@ def threshold_point_defects(test_1_use):
         ib_max = np.vstack((ib_max_1, ib_max_2))
         print('ib_min = ', ib_min)
         print('ib_max = ', ib_max)
-        # 判断是否既有大于零的数也有小于零的数
+        # 
         contains_positive = np.any(ib_all[1, :] > 0)
         contains_negative = np.any(ib_all[1, :] < 0)
 
@@ -325,7 +322,7 @@ def threshold_point_defects(test_1_use):
             kmeans = KMeans(n_clusters=elbowIndex_ib)
             #     print(ia_all)
             ib_all = ib_all.T
-            idx_ib = kmeans.fit_predict(ib_all) + 1 # ia_all 23.9.2 这个组别自己定义会从0组开始
+            idx_ib = kmeans.fit_predict(ib_all) + 1 # ia_all 23.9.2 
             #
             ib_all = np.column_stack((ib_all, idx_ib))
             # #
@@ -333,12 +330,12 @@ def threshold_point_defects(test_1_use):
             C_b = np.column_stack((C_b, np.arange(1, C_b.shape[0] + 1)))
             C_b = C_b[C_b[:, 0].argsort()]
 
-            print('C_b = ', C_b)  # 这个最后一类好像就行
+            print('C_b = ', C_b)  # 
             print('---------------------------------------------')
 
             print('C_b[-1, 1] = ', C_b[-1, -1])
             print('---------------------------------------------')
-            b_all_cate = ib_all[ib_all[:, -1] == C_b[-1, -1], 0]  # 最后一行的类别
+            b_all_cate = ib_all[ib_all[:, -1] == C_b[-1, -1], 0]  # 
             for i in range(C_b.shape[0] - 1):
                 if C_b[C_b.shape[0] - i - 2, 0] > 0.5:
                     b_all_cate = np.concatenate((b_all_cate, ib_all[ib_all[:, -1] == C_b[C_b.shape[0] - i - 2, -1], 0]))
@@ -354,7 +351,7 @@ def threshold_point_defects(test_1_use):
                     index_b = ib_final1.index(i)
                     id_b_final.append(ib_final[2, index_b])
 
-            # 判断是否会在重复值当中存在和b_all_cate相同的内容
+            # 
             if deleted_rows.shape[1] != 0:
                 for i in range(deleted_rows):
                     if deleted_rows[0, i] in b_all_cate:
@@ -363,7 +360,7 @@ def threshold_point_defects(test_1_use):
             print('-----------------------------------------------')
             # print('np.min(b_all_cate)', np.min(b_all_cate))
             print('-----------------------------------------')
-            b_infimum_all = id_b_final  # 根据识别阈值来进行判断
+            b_infimum_all = id_b_final  # 
             print('ib last recognition threshold: ', b_infimum_all)
             print('All the contents of the ib configuration-----------------------------------------------')
         else:
@@ -376,7 +373,7 @@ def threshold_point_defects(test_1_use):
     count_ic = 0
 
     for i in range(test_1_use.shape[0]):
-        if int(test_1_use[i, 5]) == 3 and int(test_1_use[i, 7]) == 6: #  and test_1_use[i, 9] == 0增加了配位数的判断
+        if int(test_1_use[i, 5]) == 3 and int(test_1_use[i, 7]) == 6:
             ic_all.append(test_1_use[i, 6])
             ic_pre.append(test_1_use[i, 8])
             ic_all_id.append(test_1_use[i, 0])
@@ -389,11 +386,11 @@ def threshold_point_defects(test_1_use):
                'id_ic': ic_all_id
     }
 
-    input_data = pd.DataFrame(data_ic)  # 对重复数据进行的操作
+    input_data = pd.DataFrame(data_ic)  # 
     print('input_data = ')
     print(input_data)
-    deleted_rows = input_data[input_data.duplicated(subset=['Similarity', 'differ'], keep='first')]  # 得到重复数据的行
-    ic_all_without_du = input_data.drop_duplicates(subset=['Similarity', 'differ'], keep='first')  #  得到删除重复数据的内容
+    deleted_rows = input_data[input_data.duplicated(subset=['Similarity', 'differ'], keep='first')]  # 
+    ic_all_without_du = input_data.drop_duplicates(subset=['Similarity', 'differ'], keep='first')  #  
     print('ic_all_without_du = ', ic_all_without_du)
     print('deleted_rows = ', deleted_rows)
 
@@ -406,14 +403,14 @@ def threshold_point_defects(test_1_use):
 
     ic_all = ic_all_without[0, :]
 
-    if ic_all.shape[0] == 0: #  如果测试集中没有对应的缺陷构型
+    if ic_all.shape[0] == 0: #  
         c_infimum_all = []
     elif np.max(ic_all) < 0.5:
         c_infimum_all = []
     elif ic_all.shape[0] == 1:
         c_infimum_all = ic_all_id
     elif ic_all.shape[0] == 2 and np.max(ic_all) > 0.5 and np.min(ic_all) < np.max(
-        ic_all) * 0.7:  # 如果最小值比最大值的0.5还小就认为不是所需要的构型
+        ic_all) * 0.7:  # 
         ic_pre = ic_all_without[1, :]
         ic_all_id = ic_all_without[2, :]
 
@@ -431,7 +428,7 @@ def threshold_point_defects(test_1_use):
                     c_infimum_all.append(deleted_rows[2, i])
 
     else:
-        #  如果存在相同的内容就需要将后面的值先进行存储
+        #  
         ic_pre = ic_all_without[1, :]
         ic_all_id = ic_all_without[2, :]
 
@@ -452,7 +449,7 @@ def threshold_point_defects(test_1_use):
         print('ic_min = ', ic_min)
         print('ic_max = ', ic_max)
 
-        # 判断是否既有大于零的数也有小于零的数
+        # 
         contains_positive = np.any(ic_all[1, :] > 0)
         contains_negative = np.any(ic_all[1, :] < 0)
 
@@ -470,19 +467,19 @@ def threshold_point_defects(test_1_use):
             kmeans = KMeans(n_clusters=elbowIndex_ic)
             #     print(ia_all)
             ic_all = ic_all.T
-            idx_ic = kmeans.fit_predict(ic_all) + 1  # ia_all 23.9.2 这个组别自己定义会从0组开始
+            idx_ic = kmeans.fit_predict(ic_all) + 1  # ia_all 23.9.2 
             #
             ic_all = np.column_stack((ic_all, idx_ic))
             # #
             C_c = kmeans.cluster_centers_
             C_c = np.column_stack((C_c, np.arange(1, C_c.shape[0] + 1)))
             C_c = C_c[C_c[:, 0].argsort()]
-            print('C_c = ', C_c)  # 这个最后一类好像就行
+            print('C_c = ', C_c)  # 
             print('---------------------------------------------')
 
             print('C_c[-1, 1] = ', C_c[-1, -1])
             print('---------------------------------------------')
-            c_all_cate = ic_all[ic_all[:, -1] == C_c[-1, -1], 0]  # 最后一行的类别
+            c_all_cate = ic_all[ic_all[:, -1] == C_c[-1, -1], 0]  # 
 
             for i in range(C_c.shape[0] - 1):
                 if C_c[C_c.shape[0] - i - 2, 0] > 0.5:
@@ -494,13 +491,13 @@ def threshold_point_defects(test_1_use):
             ic_final1 = ic_final1.tolist()
             print(ic_final1)
 
-            for i in c_all_cate: #  有可能存在两个值一模一样的问题
+            for i in c_all_cate: #  
                 c_c += 1
                 if i in ic_final[0, :]:
                     index_c = ic_final1.index(i)
                     id_c_final.append(ic_final[2, index_c])
 
-            # 判断是否会在重复值当中存在和c_all_cate相同的内容
+            # 
             if deleted_rows.shape[1] != 0:
                 for i in range(deleted_rows):
                     if deleted_rows[0, i] in c_all_cate:
@@ -510,7 +507,7 @@ def threshold_point_defects(test_1_use):
             print('-----------------------------------------------')
             print('np.min(c_all_cate)', np.min(c_all_cate))
             print('-----------------------------------------')
-            c_infimum_all = id_c_final  # 根据识别阈值来进行判断
+            c_infimum_all = id_c_final  # 
             print('ic last recognition threshold: ', c_infimum_all)
             print('All the contents of the ic configuration-----------------------------------------------')
         else:
