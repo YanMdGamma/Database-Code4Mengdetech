@@ -5,38 +5,36 @@ import matplotlib.pylab as mpl
 import pandas as pd
 import scipy.io as sio
 
-# 肘部图的绘制和选择
 def elbow(inputArg1):
-    # 设置聚类数量的范围
+    # 
     inputArg1 = inputArg1.T
     print(inputArg1.shape)
     input_data = pd.DataFrame(inputArg1)
-    inputArg1 = input_data.drop_duplicates()  # 对原始数据中的重复数据进行清洗
+    inputArg1 = input_data.drop_duplicates()  # 
     k_values = np.arange(1, inputArg1.shape[0] + 1)
     print(k_values)
-    # 初始化聚类误差存储向量
+    #
     errors = np.zeros(len(k_values))
     print(errors)
 
-    # 计算每个聚类数量下的聚类误差
+    # 
     # warnings.filterwarnings("ignore", category= ConvergenceWarning)
     for i, k in enumerate(k_values):
         kmeans = KMeans(n_clusters=k)
         kmeans.fit(inputArg1)
         errors[i] = np.sum(np.min(kmeans.transform(inputArg1), axis=1))
 
-    # 绘制肘部图
     plt.figure()
-    # plt.rcParams['font.family'] = 'SimHei'  # 使用微软雅黑字体，可以根据需要更改
+    # plt.rcParams['font.family'] = 'SimHei'  
     mpl.rcParams["font.sans-serif"] = ["SimHei"]
-    # 设置正常显示符号
+ 
     mpl.rcParams["axes.unicode_minus"] = False
     plt.plot(k_values, errors, 'o-')
     plt.title('Elbow Method')
     plt.xlabel('Cluster number')
     plt.ylabel('error')
 
-    # 寻找肘部位置
+
     diff_errors = np.diff(errors)
     elbowIndex = np.where(np.abs(diff_errors) <= np.abs(np.mean(diff_errors)))[0][0]
     plt.plot(k_values[elbowIndex], errors[elbowIndex], 'ro', markersize=10, linewidth=2)
@@ -53,7 +51,7 @@ def Simple_vacancy(test_1_use):
     # ide_d_final = []
     # ied_e_final = []
     for i in range(test_1_use.shape[0]):
-        if int(test_1_use[i, 5]) == 8 and test_1_use[i, 7] == 6:  # 增加了配位数的判断
+        if int(test_1_use[i, 5]) == 8 and test_1_use[i, 7] == 6: 
             Ga1_all.append(test_1_use[i, 6])
             Ga1_pre.append(test_1_use[i, 8]/10)
             Ga1_all_id.append(test_1_use[i, 0])
@@ -66,11 +64,11 @@ def Simple_vacancy(test_1_use):
                'id_ic': Ga1_all_id
     }
 
-    input_data = pd.DataFrame(data_Ga1)  # 对重复数据进行的操作
+    input_data = pd.DataFrame(data_Ga1)  
     print('input_data = ')
     print(input_data)
-    deleted_rows = input_data[input_data.duplicated(subset=['Similarity', 'differ'], keep='first')]  # 得到重复数据的行
-    Ga1_all_without_du = input_data.drop_duplicates(subset=['Similarity', 'differ'], keep='first')  #  得到删除重复数据的内容
+    deleted_rows = input_data[input_data.duplicated(subset=['Similarity', 'differ'], keep='first')] 
+    Ga1_all_without_du = input_data.drop_duplicates(subset=['Similarity', 'differ'], keep='first') 
     print('Ga1_all_without_du = ', Ga1_all_without_du)
     print('deleted_rows = ', deleted_rows)
 
@@ -90,7 +88,7 @@ def Simple_vacancy(test_1_use):
     elif Ga1_all.shape[0] == 1:
         Ga1_infimum_all = Ga1_all_id
     elif Ga1_all.shape[0] == 2 and np.max(Ga1_all) > 0.5 and np.min(Ga1_all) < np.max(
-            Ga1_all) * 0.8:  # 如果最小值比最大值的0.5还小就认为不是所需要的构型
+            Ga1_all) * 0.8: 
         Ga1_pre = Ga1_all_without[1, :]
         Ga1_all_id = Ga1_all_without[2, :]
 
@@ -128,7 +126,6 @@ def Simple_vacancy(test_1_use):
         print('Ga1_min = ', Ga1_min)
         print('Ga1_max = ', Ga1_max)
 
-        # 判断是否既有大于零的数也有小于零的数
         contains_positive = np.any(Ga1_all[1, :] > 0)
         contains_negative = np.any(Ga1_all[1, :] < 0)
 
@@ -146,14 +143,14 @@ def Simple_vacancy(test_1_use):
             kmeans = KMeans(n_clusters=elbowIndex_id)
             #     print(ia_all)
             Ga1_all = Ga1_all.T
-            Ga1x_id = kmeans.fit_predict(Ga1_all) + 1 # ia_all 23.9.2 这个组别自己定义会从0组开始
+            Ga1x_id = kmeans.fit_predict(Ga1_all) + 1
             #
             Ga1_all = np.column_stack((Ga1_all, Ga1x_id))
             # #
             C_d = kmeans.cluster_centers_
             C_d = np.column_stack((C_d, np.arange(1, C_d.shape[0] + 1)))
             C_d = C_d[C_d[:, 0].argsort()]
-            print('C_d = ', C_d)  # 这个最后一类好像就行
+            print('C_d = ', C_d) 
             print('---------------------------------------------')
 
             print('C_d[-1, -1] = ', C_d[-1, -1])
@@ -161,9 +158,8 @@ def Simple_vacancy(test_1_use):
             if C_d[-1, 0] <= 0.5:
                 Ga1_all_cate = []
             else:
-                Ga1_all_cate = Ga1_all[Ga1_all[:, -1] == C_d[-1, -1], 0]  # 最后一行的类别
+                Ga1_all_cate = Ga1_all[Ga1_all[:, -1] == C_d[-1, -1], 0] 
 
-            # 留一个类别用来存储复合缺陷构型
             ide = []
             # for i in range(C_d.shape[0] - 1):
             #     if C_d[C_d.shape[0] - i - 2, 0] > 0.7 * C_d[-1, 0] and C_d[C_d.shape[0] - i - 2, 0] >= 0.5:
@@ -201,7 +197,7 @@ def Simple_vacancy(test_1_use):
             print('-----------------------------------------------')
             # print('np.min(a_all_cate)', np.min(a_all_cate))
             print('-----------------------------------------')
-            Ga1_infimum_all = Ga1_d_final  # 根据识别阈值来进行判断
+            Ga1_infimum_all = Ga1_d_final  
             print('Ga1 last recognition threshold', Ga1_infimum_all)
             print('All the contents of the Ga1 configuration-----------------------------------------------')
         else:
@@ -215,7 +211,7 @@ def Simple_vacancy(test_1_use):
     count_Ga2 = 0
 
     for i in range(test_1_use.shape[0]):
-        if int(test_1_use[i, 5]) == 9 and test_1_use[i, 7] == 4:  # 增加了配位数的判断
+        if int(test_1_use[i, 5]) == 9 and test_1_use[i, 7] == 4: 
             Ga2_all.append(test_1_use[i, 6] * 10)
             Ga2_pre.append(test_1_use[i, 8])
             Ga2_all_id.append(test_1_use[i, 0])
@@ -228,11 +224,11 @@ def Simple_vacancy(test_1_use):
                'id_ic': Ga2_all_id
     }
 
-    input_data = pd.DataFrame(data_Ga2)  # 对重复数据进行的操作
+    input_data = pd.DataFrame(data_Ga2) 
     print('input_data = ')
     print(input_data)
-    deleted_rows = input_data[input_data.duplicated(subset=['Similarity', 'differ'], keep='first')]  # 得到重复数据的行
-    Ga2_all_without_du = input_data.drop_duplicates(subset=['Similarity', 'differ'], keep='first')  #  得到删除重复数据的内容
+    deleted_rows = input_data[input_data.duplicated(subset=['Similarity', 'differ'], keep='first')] 
+    Ga2_all_without_du = input_data.drop_duplicates(subset=['Similarity', 'differ'], keep='first')
     print('Ga2_all_without_du = ', Ga2_all_without_du)
     print('deleted_rows = ', deleted_rows)
 
@@ -251,7 +247,7 @@ def Simple_vacancy(test_1_use):
         Ga2_infimum_all = []
     elif Ga2_all.shape[0] == 1:
         Ga2_infimum_all = Ga2_all_id
-    elif Ga2_all.shape[0] == 2 and np.max(Ga2_all) > 2 and np.min(Ga2_all) < np.max(Ga2_all)*0.8: #  如果最小值比最大值的0.5还小就认为不是所需要的构型
+    elif Ga2_all.shape[0] == 2 and np.max(Ga2_all) > 2 and np.min(Ga2_all) < np.max(Ga2_all)*0.8:
         Ga2_pre = Ga2_all_without[1, :]
         Ga2_all_id = Ga2_all_without[2, :]
 
@@ -288,7 +284,6 @@ def Simple_vacancy(test_1_use):
         print('Ga2_min = ', Ga2_min)
         print('Ga2_max = ', Ga2_max)
 
-        # 判断是否既有大于零的数也有小于零的数
         contains_positive = np.any(Ga2_all[1, :] > 0)
         contains_negative = np.any(Ga2_all[1, :] < 0)
 
@@ -306,14 +301,14 @@ def Simple_vacancy(test_1_use):
             kmeans = KMeans(n_clusters=elbowIndex_Ga2)
             #     print(ia_all)
             Ga2_all = Ga2_all.T
-            idx_Ga2 = kmeans.fit_predict(Ga2_all) + 1  # ia_all 23.9.2 这个组别自己定义会从0组开始
+            idx_Ga2 = kmeans.fit_predict(Ga2_all) + 1 
             #
             Ga2_all = np.column_stack((Ga2_all, idx_Ga2))
             # #
             C_Ga2 = kmeans.cluster_centers_
             C_Ga2 = np.column_stack((C_Ga2, np.arange(1, C_Ga2.shape[0] + 1)))
             C_Ga2 = C_Ga2[C_Ga2[:, 0].argsort()]
-            print('C_Ga2 = ', C_Ga2)  # 这个最后一类好像就行
+            print('C_Ga2 = ', C_Ga2) 
             print('---------------------------------------------')
 
             print('C_Ga2[-1, 1] = ', C_Ga2[-1, -1])
@@ -321,8 +316,8 @@ def Simple_vacancy(test_1_use):
             Ga2_all_cate = Ga2_all[Ga2_all[:, -1] == C_Ga2[-1, -1], 0]
             # ied = []
             # for i in range(C_Ga2.shape[0]):
-            #     if C_Ga2[i, 0] > 5: # 这个是将相似度大于5的全部包含进去了
-            #         Ga2_all_cate = np.concatenate((Ga2_all_cate, Ga2_all[Ga2_all[:, -1] == C_Ga2[i, -1], 0]))   # 最后一行的类别
+            #     if C_Ga2[i, 0] > 5: 
+            #         Ga2_all_cate = np.concatenate((Ga2_all_cate, Ga2_all[Ga2_all[:, -1] == C_Ga2[i, -1], 0]))  
             #     elif C_Ga2[i, 0] <= 5 and C_Ga2[i, 0] >= 1:
             #         ied = np.concatenate((Ga2_all_cate, Ga2_all[Ga2_all[:, -1] == C_Ga2[i, -1], 0]))
 
@@ -350,7 +345,7 @@ def Simple_vacancy(test_1_use):
             print('-----------------------------------------------')
             # print('np.min(a_all_cate)', np.min(a_all_cate))
             print('-----------------------------------------')
-            Ga2_infimum_all = id_Ga2_final  # 根据识别阈值来进行判断
+            Ga2_infimum_all = id_Ga2_final
             print('Ga2 last recognition threshold: ', Ga2_infimum_all)
             print('All the contents of the Ga2 configuration-----------------------------------------------')
             # e_infimum_all = ie_all_id
