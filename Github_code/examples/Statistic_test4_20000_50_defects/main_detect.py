@@ -11,29 +11,29 @@ import my_module
 def main(xyz_file_output_path, amplification_coefficient4abc, amplification_coefficient4de, Atom_type, massage_comment):
     data = sio.loadmat('n_0620_t1.mat')
     n_0620_t1 = data['test1']
-    f_c_data = sio.loadmat('../f_c.mat')
+    f_c_data = sio.loadmat('./database/f_c.mat')
     f_c = f_c_data['mydata']
-    s_c_data = sio.loadmat('../s_c.mat')
+    s_c_data = sio.loadmat('./database/s_c.mat')
     s_c = s_c_data['mydata']
-    ia_data = sio.loadmat('../ia.mat')
+    ia_data = sio.loadmat('./database/ia.mat')
     ia = ia_data['mydata']
-    ib_data = sio.loadmat('../ib.mat')
+    ib_data = sio.loadmat('./database/ib.mat')
     ib = ib_data['mydata']
-    ic_data = sio.loadmat('../ic.mat')
+    ic_data = sio.loadmat('./database/ic.mat')
     ic = ic_data['mydata']
-    id1_data = sio.loadmat('../ida.mat')
+    id1_data = sio.loadmat('./database/ida.mat')
     id1 = id1_data['mydata']
-    id2_data = sio.loadmat('../idd.mat')
+    id2_data = sio.loadmat('./database/idd.mat')
     id2 = id2_data['mydata']
-    ie1_data = sio.loadmat('../iea.mat')
+    ie1_data = sio.loadmat('./database/iea.mat')
     ie1 = ie1_data['mydata']
-    ie2_data = sio.loadmat('../iee.mat')
+    ie2_data = sio.loadmat('./database/iee.mat')
     ie2 = ie2_data['mydata']
 
-    f_c_bc_data = sio.loadmat('../f_c_bc.mat')
+    f_c_bc_data = sio.loadmat('./database/f_c_bc.mat')
     f_c_bc = f_c_bc_data['mydata']
 
-    f_c_asv_data = sio.loadmat('../asv.mat')
+    f_c_asv_data = sio.loadmat('./database/asv.mat')
     f_c_asv = f_c_asv_data['mydata']
 
 
