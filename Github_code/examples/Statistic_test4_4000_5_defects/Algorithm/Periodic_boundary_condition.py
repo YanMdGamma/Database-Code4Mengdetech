@@ -52,7 +52,7 @@ def replicative_solution(n_0620_t1, sphere_radium, x_max, x_min, y_max, y_min, z
             num_last = num_last + 1
             print(count_atom)
             x_change = n_0620_t1[spare_num][2] - (x_max-x_min)
-            # print('x valuew：', x_change)
+            # print('x value：', x_change)
             create_spare_atoms = np.vstack((create_spare_atoms, np.concatenate(
                 (num_last, type_, x_change, n_0620_t1[spare_num][3], n_0620_t1[spare_num][4], n_0620_t1[spare_num][5]), axis=None)))
 
