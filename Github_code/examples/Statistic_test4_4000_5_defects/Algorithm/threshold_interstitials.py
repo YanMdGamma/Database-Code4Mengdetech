@@ -214,7 +214,7 @@ def threshold_interstitials(test_1_use, file):
                 # 
                 for i in d_all_cate:
                     if i < 0.5:
-                        print("i的值为：", i)
+                        print("Value of i is ：", i)
                         c_d += 1
                         if i in id_final[0, :]:
                             index_d = id_final1.index(i)
