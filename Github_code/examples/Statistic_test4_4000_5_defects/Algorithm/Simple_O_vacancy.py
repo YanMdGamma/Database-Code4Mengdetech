@@ -5,38 +5,38 @@ import matplotlib.pylab as mpl
 import pandas as pd
 import scipy.io as sio
 
-# 肘部图的绘制和选择
+# 
 def elbow(inputArg1):
-    # 设置聚类数量的范围
+    # 
     inputArg1 = inputArg1.T
     print(inputArg1.shape)
     input_data = pd.DataFrame(inputArg1)
-    inputArg1 = input_data.drop_duplicates()  # 对原始数据中的重复数据进行清洗
+    inputArg1 = input_data.drop_duplicates()  # 
     k_values = np.arange(1, inputArg1.shape[0] + 1)
     print(k_values)
-    # 初始化聚类误差存储向量
+    # 
     errors = np.zeros(len(k_values))
     print(errors)
 
-    # 计算每个聚类数量下的聚类误差
+    # 
     # warnings.filterwarnings("ignore", category= ConvergenceWarning)
     for i, k in enumerate(k_values):
         kmeans = KMeans(n_clusters=k)
         kmeans.fit(inputArg1)
         errors[i] = np.sum(np.min(kmeans.transform(inputArg1), axis=1))
 
-    # 绘制肘部图
+    # 
     plt.figure()
     # plt.rcParams['font.family'] = 'SimHei'
     mpl.rcParams["font.sans-serif"] = ["SimHei"]
-    # 设置正常显示符号
+    # 
     mpl.rcParams["axes.unicode_minus"] = False
     plt.plot(k_values, errors, 'o-')
     plt.title('Elbow Method')
     plt.xlabel('Cluster number')
     plt.ylabel('error')
 
-    # 寻找肘部位置
+    # 
     diff_errors = np.diff(errors)
     elbowIndex = -1  # Default value
     if diff_errors.size > 0:
@@ -50,12 +50,12 @@ def Simple_O_vacancy(test_1_use):
     O1_all = []
     O1_pre = []
     O1_all_id = []
-    O1_all_differ = [] # 在静态的实验里面没有引入这个变量
+    O1_all_differ = [] # 
     count_O1 = 0
 
     for i in range(test_1_use.shape[0]):
         col_judge = test_1_use.shape[1]
-        if (int(test_1_use[i, 5]) == 1 or int(test_1_use[i, 5]) == 2) and int(test_1_use[i, 7]) == 3:  # 增加了配位数的判断
+        if (int(test_1_use[i, 5]) == 1 or int(test_1_use[i, 5]) == 2) and int(test_1_use[i, 7]) == 3:  # 
             O1_all.append(test_1_use[i, 6])
             O1_pre.append(test_1_use[i, 8])
             O1_all_id.append(test_1_use[i, 0])
@@ -73,11 +73,11 @@ def Simple_O_vacancy(test_1_use):
                'differ_max': O1_all_differ
     }
 
-    input_data = pd.DataFrame(data_ia)  # 对重复数据进行的操作
+    input_data = pd.DataFrame(data_ia)  # 
     print('input_data = ')
     print(input_data)
-    deleted_rows = input_data[input_data.duplicated(subset=['Similarity', 'differ'], keep='first')]  # 得到重复数据的行
-    O1_all_without_du = input_data.drop_duplicates(subset=['Similarity', 'differ'], keep='first')  #  得到删除重复数据的内容
+    deleted_rows = input_data[input_data.duplicated(subset=['Similarity', 'differ'], keep='first')]  # 
+    O1_all_without_du = input_data.drop_duplicates(subset=['Similarity', 'differ'], keep='first')  #  
     print('O1_all_without_du = ', O1_all_without_du)
     print('deleted_rows = ', deleted_rows)
 
@@ -97,7 +97,7 @@ def Simple_O_vacancy(test_1_use):
     elif O1_all.shape[0] == 1:
         O1_infimum_all = O1_all_id
     elif O1_all.shape[0] == 2 and np.max(O1_all) > 0.5 and np.min(O1_all) < np.max(
-        O1_all) * 0.7:  # 如果最小值比最大值的0.5还小就认为不是所需要的构型
+        O1_all) * 0.7:  # 
         O1_pre = O1_all_without[1, :]
         O1_all_id = O1_all_without[2, :]
 
@@ -119,9 +119,8 @@ def Simple_O_vacancy(test_1_use):
         O1_pre = O1_all_without[1, :]
         O1_all_id = O1_all_without[2, :]
         O1_all_differ = O1_all_without[3, :]
-        # 这个differ后面动态测试的时候有用
-        # 24.1.4 求解均值
-        # 这个differ后面动态测试的时候有用
+        # 
+        # 
         O1_all = np.vstack((O1_all, O1_pre, O1_all_differ))
         O1_final = np.vstack((O1_all, O1_all_id))
         print('O1_all = ', O1_all)
@@ -139,7 +138,7 @@ def Simple_O_vacancy(test_1_use):
         print('O1_min = ', O1_min)
         print('O1_max = ', O1_max)
 
-        # 判断是否既有大于零的数也有小于零的数
+        # 
         contains_positive = np.any(O1_all[1, :] > 0)
         contains_negative = np.any(O1_all[1, :] < 0)
 
@@ -154,13 +153,13 @@ def Simple_O_vacancy(test_1_use):
 
             # elbowIndex_ia = 8
             print("elbowIndex_O1", elbowIndex_O1)
-            if elbowIndex_O1 == 0: # 仅仅识别出一个ia构型
+            if elbowIndex_O1 == 0: # 
                 elbowIndex_O1 = 1
             #
             kmeans = KMeans(n_clusters=elbowIndex_O1)
             #     print(ia_all)
             O1_all = O1_all.T
-            idx_O1 = kmeans.fit_predict(O1_all) + 1  # ia_all 23.9.2 这个组别自己定义会从0组开始
+            idx_O1 = kmeans.fit_predict(O1_all) + 1  # ia_all 23.9.2 
             #
             O1_all = np.column_stack((O1_all, idx_O1))
             # #
@@ -169,7 +168,6 @@ def Simple_O_vacancy(test_1_use):
             C_O1 = C_O1[C_O1[:, 0].argsort()]
             print("C_O1", C_O1)
             count = 0
-            # # 如果最值之间的平均值要大于0.45，那么便舍去该组，更新C_a
             # for i in range(C_a.shape[0]):
             #     print(C_a.shape[1])
             #     if C_a.shape[1] > 2:
@@ -181,19 +179,19 @@ def Simple_O_vacancy(test_1_use):
             O1_all_cate = []
             O1_all_cate = np.concatenate((O1_all_cate, O1_all[O1_all[:, -1] == C_O1[-1, -1], 0]))
 
-            # 将对应的differ平均值进行计算
+            # 
             print('24.1.5: O1_all_cate:', O1_all_cate)
 
             for i in range(C_O1.shape[0] - 1):
                 if C_O1[C_O1.shape[0] - i - 2, 0] > 0.91 * C_O1[-1, 0]:
                     O1_all_cate = np.concatenate((O1_all_cate, O1_all[O1_all[:, -1] == C_O1[C_O1.shape[0] - i - 2, -1], 0]))
 
-            print('C_O1 = ', C_O1)  # 这个最后一类好像就行
+            print('C_O1 = ', C_O1)  # 
             print('---------------------------------------------')
 
             print('C_O1[-1, 1] = ', C_O1[0, -1])
             print('---------------------------------------------')
-              # 最后一行的类别
+              # 
 
             id_O1_final = []
             c_O1 = 0
@@ -208,7 +206,7 @@ def Simple_O_vacancy(test_1_use):
                     id_O1_final.append(O1_final[3, index_O1])
                     print('24.1.5:id_O1_final:', O1_final[3, index_O1])
 
-            # 判断是否会在重复值当中存在和a_all_cate相同的内容
+            # 
             if deleted_rows.shape[1] != 0:
                 for i in range(deleted_rows.shape[1]):
                     if deleted_rows[0, i] in O1_all_cate:
@@ -220,7 +218,7 @@ def Simple_O_vacancy(test_1_use):
             print('-----------------------------------------------')
             # print('np.min(a_all_cate)', np.min(a_all_cate))
             print('-----------------------------------------')
-            O1_infimum_all = id_O1_final  # 根据识别阈值来进行判断
+            O1_infimum_all = id_O1_final  # 
             print('O1 last recognition threshold: ', O1_infimum_all)
             print('All the contents of the O1 configuration-----------------------------------------------')
         else:
@@ -233,7 +231,7 @@ def Simple_O_vacancy(test_1_use):
     count_O2 = 0
 
     for i in range(test_1_use.shape[0]):
-        if (int(test_1_use[i, 5]) == 3 or int(test_1_use[i, 5]) == 4) and int(test_1_use[i, 7]) == 3:  # 增加了配位数的判断
+        if (int(test_1_use[i, 5]) == 3 or int(test_1_use[i, 5]) == 4) and int(test_1_use[i, 7]) == 3:  # 
             O2_all.append(test_1_use[i, 6])
             O2_pre.append(test_1_use[i, 8])
             O2_all_id.append(test_1_use[i, 0])
@@ -246,11 +244,11 @@ def Simple_O_vacancy(test_1_use):
                'id_O2': O2_all_id
     }
 
-    input_data = pd.DataFrame(data_ib)  # 对重复数据进行的操作
+    input_data = pd.DataFrame(data_ib)  # 
     print('input_data = ')
     print(input_data)
-    deleted_rows = input_data[input_data.duplicated(subset=['Similarity', 'differ'], keep='first')]  # 得到重复数据的行
-    O2_all_without_du = input_data.drop_duplicates(subset=['Similarity', 'differ'], keep='first')  #  得到删除重复数据的内容
+    deleted_rows = input_data[input_data.duplicated(subset=['Similarity', 'differ'], keep='first')]  # 
+    O2_all_without_du = input_data.drop_duplicates(subset=['Similarity', 'differ'], keep='first')  #  
     print('O2_all_without_du = ', O2_all_without_du)
     print('deleted_rows = ', deleted_rows)
 
@@ -263,7 +261,6 @@ def Simple_O_vacancy(test_1_use):
 
     O2_all = O2_all_without[0, :]
 
-    # 还要增加的内容是，对于识别结果仅有两个粒子的情况，要去除识别效果差的，两个粒子的情况无法采用聚类区分，会有很大误差
     if O2_all.shape[0] == 0:
         O2_infimum_all = []
         # print(ib_all.shape[0])
@@ -271,7 +268,7 @@ def Simple_O_vacancy(test_1_use):
         O2_infimum_all = []
     elif O2_all.shape[0] == 1:
         O2_infimum_all = O2_all_id
-    elif O2_all.shape[0] == 2 and np.max(O2_all) > 0.5 and np.min(O2_all) < np.max(O2_all)*0.8: #  如果最小值比最大值的0.5还小就认为不是所需要的构型
+    elif O2_all.shape[0] == 2 and np.max(O2_all) > 0.5 and np.min(O2_all) < np.max(O2_all)*0.8: # 
         O2_pre = O2_all_without[1, :]
         O2_all_id = O2_all_without[2, :]
 
@@ -288,7 +285,7 @@ def Simple_O_vacancy(test_1_use):
                 if deleted_rows[0, i] == np.max(O2_all):
                     O2_infimum_all.append(deleted_rows[2, i])
     else:
-        #  如果存在相同的内容就需要将后面的值先进行存储
+        #  
         O2_pre = O2_all_without[1, :]
         O2_all_id = O2_all_without[2, :]
 
@@ -308,7 +305,7 @@ def Simple_O_vacancy(test_1_use):
         O2_max = np.vstack((O2_max_1, O2_max_2))
         print('O2_min = ', O2_min)
         print('O2_max = ', O2_max)
-        # 判断是否既有大于零的数也有小于零的数
+        # 
         contains_positive = np.any(O2_all[1, :] > 0)
         contains_negative = np.any(O2_all[1, :] < 0)
 
@@ -325,7 +322,7 @@ def Simple_O_vacancy(test_1_use):
             kmeans = KMeans(n_clusters=elbowIndex_O2)
             #     print(ia_all)
             O2_all = O2_all.T
-            idx_O2 = kmeans.fit_predict(O2_all) + 1 # ia_all 23.9.2 这个组别自己定义会从0组开始
+            idx_O2 = kmeans.fit_predict(O2_all) + 1 # ia_all 23.9.2 
             #
             O2_all = np.column_stack((O2_all, idx_O2))
             # #
@@ -333,12 +330,12 @@ def Simple_O_vacancy(test_1_use):
             C_O2 = np.column_stack((C_O2, np.arange(1, C_O2.shape[0] + 1)))
             C_O2 = C_O2[C_O2[:, 0].argsort()]
 
-            print('C_O2 = ', C_O2)  # 这个最后一类好像就行
+            print('C_O2 = ', C_O2)  # 
             print('---------------------------------------------')
 
             print('C_O2[-1, 1] = ', C_O2[-1, -1])
             print('---------------------------------------------')
-            O2_all_cate = O2_all[O2_all[:, -1] == C_O2[-1, -1], 0]  # 最后一行的类别
+            O2_all_cate = O2_all[O2_all[:, -1] == C_O2[-1, -1], 0]  # 
             for i in range(C_O2.shape[0] - 1):
                 if C_O2[C_O2.shape[0] - i - 2, 0] > 0.5:
                     O2_all_cate = np.concatenate((O2_all_cate, O2_all[O2_all[:, -1] == C_O2[C_O2.shape[0] - i - 2, -1], 0]))
@@ -354,7 +351,7 @@ def Simple_O_vacancy(test_1_use):
                     index_O2 = O2_final1.index(i)
                     id_O2_final.append(O2_final[2, index_O2])
 
-            # 判断是否会在重复值当中存在和b_all_cate相同的内容
+            # 
             if deleted_rows.shape[1] != 0:
                 for i in range(deleted_rows.shape[1]):
                     if deleted_rows[0, i] in O2_all_cate:
@@ -363,7 +360,7 @@ def Simple_O_vacancy(test_1_use):
             print('-----------------------------------------------')
             # print('np.min(b_all_cate)', np.min(b_all_cate))
             print('-----------------------------------------')
-            O2_infimum_all = id_O2_final  # 根据识别阈值来进行判断
+            O2_infimum_all = id_O2_final  # 
             print('O2 last recognition threshold: ', O2_infimum_all)
             print('All the contents of the O2 configuration-----------------------------------------------')
         else:
@@ -376,7 +373,7 @@ def Simple_O_vacancy(test_1_use):
     count_O3 = 0
 
     for i in range(test_1_use.shape[0]):
-        if (int(test_1_use[i, 5]) == 5 or int(test_1_use[i, 5]) == 6) and int(test_1_use[i, 7]) == 4: #  and test_1_use[i, 9] == 0增加了配位数的判断
+        if (int(test_1_use[i, 5]) == 5 or int(test_1_use[i, 5]) == 6) and int(test_1_use[i, 7]) == 4:
             O3_all.append(test_1_use[i, 6])
             O3_pre.append(test_1_use[i, 8])
             O3_all_id.append(test_1_use[i, 0])
@@ -389,11 +386,11 @@ def Simple_O_vacancy(test_1_use):
                'id_ic': O3_all_id
     }
 
-    input_data = pd.DataFrame(data_ic)  # 对重复数据进行的操作
+    input_data = pd.DataFrame(data_ic)  # 
     print('input_data = ')
     print(input_data)
-    deleted_rows = input_data[input_data.duplicated(subset=['Similarity', 'differ'], keep='first')]  # 得到重复数据的行
-    O3_all_without_du = input_data.drop_duplicates(subset=['Similarity', 'differ'], keep='first')  #  得到删除重复数据的内容
+    deleted_rows = input_data[input_data.duplicated(subset=['Similarity', 'differ'], keep='first')]  # 
+    O3_all_without_du = input_data.drop_duplicates(subset=['Similarity', 'differ'], keep='first')  #  
     print('O3_all_without_du = ', O3_all_without_du)
     print('deleted_rows = ', deleted_rows)
 
@@ -406,14 +403,14 @@ def Simple_O_vacancy(test_1_use):
 
     O3_all = O3_all_without[0, :]
 
-    if O3_all.shape[0] == 0: #  如果测试集中没有对应的缺陷构型
+    if O3_all.shape[0] == 0: #  
         O3_infimum_all = []
     elif np.max(O3_all) < 0.5:
         O3_infimum_all = []
     elif O3_all.shape[0] == 1:
         O3_infimum_all = O3_all_id
     elif O3_all.shape[0] == 2 and np.max(O3_all) > 0.5 and np.min(O3_all) < np.max(
-        O3_all) * 0.7:  # 如果最小值比最大值的0.5还小就认为不是所需要的构型
+        O3_all) * 0.7:  # 
         O3_pre = O3_all_without[1, :]
         O3_all_id = O3_all_without[2, :]
 
@@ -431,7 +428,7 @@ def Simple_O_vacancy(test_1_use):
                     O3_infimum_all.append(deleted_rows[2, i])
 
     else:
-        #  如果存在相同的内容就需要将后面的值先进行存储
+        #  
         O3_pre = O3_all_without[1, :]
         O3_all_id = O3_all_without[2, :]
 
@@ -452,7 +449,7 @@ def Simple_O_vacancy(test_1_use):
         print('O3_min = ', O3_min)
         print('O3_max = ', O3_max)
 
-        # 判断是否既有大于零的数也有小于零的数
+        # 
         contains_positive = np.any(O3_all[1, :] > 0)
         contains_negative = np.any(O3_all[1, :] < 0)
 
@@ -470,19 +467,19 @@ def Simple_O_vacancy(test_1_use):
             kmeans = KMeans(n_clusters=elbowIndex_O3)
             #     print(ia_all)
             O3_all = O3_all.T
-            idx_O3 = kmeans.fit_predict(O3_all) + 1  # ia_all 23.9.2 这个组别自己定义会从0组开始
+            idx_O3 = kmeans.fit_predict(O3_all) + 1  # ia_all 23.9.2 
             #
             O3_all = np.column_stack((O3_all, idx_O3))
             # #
             C_O3 = kmeans.cluster_centers_
             C_O3 = np.column_stack((C_O3, np.arange(1, C_O3.shape[0] + 1)))
             C_O3 = C_O3[C_O3[:, 0].argsort()]
-            print('C_O3 = ', C_O3)  # 这个最后一类好像就行
+            print('C_O3 = ', C_O3)  # 
             print('---------------------------------------------')
 
             print('C_O3[-1, 1] = ', C_O3[-1, -1])
             print('---------------------------------------------')
-            O3_all_cate = O3_all[O3_all[:, -1] == C_O3[-1, -1], 0]  # 最后一行的类别
+            O3_all_cate = O3_all[O3_all[:, -1] == C_O3[-1, -1], 0]  # 
 
             for i in range(C_O3.shape[0] - 1):
                 if C_O3[C_O3.shape[0] - i - 2, 0] > 0.5:
@@ -494,13 +491,13 @@ def Simple_O_vacancy(test_1_use):
             O3_final1 = O3_final1.tolist()
             print(O3_final1)
 
-            for i in O3_all_cate: #  有可能存在两个值一模一样的问题
+            for i in O3_all_cate: #  
                 c_O3 += 1
                 if i in O3_final[0, :]:
                     index_O3 = O3_final1.index(i)
                     id_O3_final.append(O3_final[2, index_O3])
 
-            # 判断是否会在重复值当中存在和c_all_cate相同的内容
+            # 
             if deleted_rows.shape[1] != 0:
                 for i in range(deleted_rows.shape[1]):
                     if deleted_rows[0, i] in O3_all_cate:
@@ -510,7 +507,7 @@ def Simple_O_vacancy(test_1_use):
             print('-----------------------------------------------')
             print('np.min(O3_all_cate)', np.min(O3_all_cate))
             print('-----------------------------------------')
-            O3_infimum_all = id_O3_final  # 根据识别阈值来进行判断
+            O3_infimum_all = id_O3_final  # 
             print('O3 last recognition threshold: ', O3_infimum_all)
             print('All the contents of the O3 configuration-----------------------------------------------')
         else:
