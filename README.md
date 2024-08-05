@@ -70,7 +70,7 @@ python Mengdetech.py ./input.xyz ./output.xyz
 
 ## Examples
 
-​	The detection experiment of [4000 atoms](Github_code/examples/Statistic_test4_4000_5_defects) and [20000 atoms](Github_code/examples/Statistic_test4_20000_50_defects) in the experiment is provided. The input is `input.xyz` and the output is `outputfile.xyz` .
+​	The detection experiment of [4,000 atoms](Github_code/examples/Statistic_test4_4000_5_defects) and [20,000 atoms](Github_code/examples/Statistic_test4_20000_50_defects) in the experiment is provided. The input is `input.xyz` and the output is `outputfile.xyz` .
 
 ## References
 
