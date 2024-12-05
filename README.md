@@ -76,7 +76,7 @@ python Mengdetech.py ./input.xyz ./output.xyz
 
 If you use this code to run a defects detection process, please cite:
 
-Yan M, Zhao J, Djurabekova F, et al. Generalized Algorithm for Recognition of Complex Point Defects in Large-Scale β-Ga2O3[J]. arXiv preprint arXiv:2401.15920, 2024.[ https://doi.org/10.48550/arXiv.2401.15920](https://doi.org/10.48550/arXiv.2401.15920)
+Yan M, Zhao J, Byggmästar J, et al.A Radial Distribution Function Based Recognition Algorithm of Point Defects in Large-Scale β-Ga2O3 Systems[J]. The Journal of Physical Chemistry Letters, vol. 15, no. 42, pp. 10677–10685, 2024.[10.1021/acs.jpclett.4c02469](https://doi.org/10.1021/acs.jpclett.4c02469)
 
 ## Contributors
 
